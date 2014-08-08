@@ -1,0 +1,6 @@
+services:
+    tsCMS_pages.pageservice:
+        class: tsCMS\PageBundle\Services\PageService
+        arguments: [ @doctrine.orm.entity_manager, @router ]
+        tags:
+            - { name: kernel.event_listener, event: tsCMS.buildSiteStructure, method: onBuildSitestructure, priority: 254 }

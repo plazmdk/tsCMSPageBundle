@@ -1,0 +1,30 @@
+{% extends 'tsCMSSystemBundle::layout.html.twig' %}
+{% block title %}Sideadministration{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-xs-7">
+            {{ form(form) }}
+        </div>
+
+        {% if page %}
+            <div class="col-xs-4 col-xs-push-1">
+                <div class="form-group">
+                    <div>
+                        <label>Funktioner</label>
+                    </div>
+                    <a class="btn btn-danger" href="{{ path("tscms_page_pages_delete",{id: page.id}) }}">Slet</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {% javascripts
+    'bundles/tscmspage/js/page.js'
+    %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
+{% endblock %}
