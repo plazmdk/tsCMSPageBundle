@@ -8,5 +8,15 @@
     "require": {
         "tsCMS/SystemBundle": "*",
         "tsCMS/FileManagerBundle": "*"
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url":  "git@github.com::plazmdk/tsCMSSystemBundle.git"
+        },
+        {
+            "type": "vcs",
+            "url":  "git@github.com::plazmdk/tsCMSFileManagerBundle.git"
+        }
+    ]
 }
