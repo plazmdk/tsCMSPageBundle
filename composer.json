@@ -1,0 +1,12 @@
+{
+    "name": "tsCMS/PageBundle",
+    "autoload": {
+        "psr-0" : {
+            "tsCMS\\PageBundle" : "src"
+        }
+    },
+    "require": {
+        "tsCMS/SystemBundle": "*",
+        "tsCMS/FileManagerBundle": "*"
+    }
+}
