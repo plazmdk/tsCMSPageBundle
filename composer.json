@@ -6,8 +6,8 @@
         }
     },
     "require": {
-        "tscms/system": "*",
-        "tscms/filemanager": "*"
+        "tscms/system": "dev-master",
+        "tscms/filemanager": "dev-master"
     },
     "repositories": [
         {
