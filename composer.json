@@ -2,7 +2,7 @@
     "name": "tscms/page",
     "autoload": {
         "psr-0" : {
-            "tsCMS\\PageBundle" : "src"
+            "tsCMS\\PageBundle" : ""
         }
     },
     "require": {
