@@ -5,6 +5,7 @@
             "tsCMS\\PageBundle" : ""
         }
     },
+    "target-dir": "tsCMS/PageBundle",
     "require": {
         "tscms/system": "dev-master",
         "tscms/filemanager": "dev-master"
