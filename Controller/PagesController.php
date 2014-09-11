@@ -92,35 +92,23 @@ class PagesController extends Controller
      * @Route("/sortCallback")
      */
     public function sortCallbackAction(Request $request) {
-        $sourceId = $request->request->get("source");
-        $action = $request->request->get("action");
-        $targetId = $request->request->get("target");
+        $id = $request->request->get("id");
+        $newPosition = $request->request->get("position");
 
         /** @var NestedTreeRepository $repo */
-        $repo = $this->getDoctrine()->getManager()->getRepository('tsCMS\PageBundle\Entity\Page');
-        /** @var Page $source */
-        $source = $repo->find($sourceId);
-        /** @var Page $target */
-        $target = $repo->find($targetId);
+        $repo = $this->getDoctrine()->getManager()->getRepository('tsCMSMenuBundle:Page');
+        /** @var Page $movee */
+        $movee = $repo->find($id);
 
-        $nextSiblings = $repo->getNextSiblings($source);
-        $targetPosition = array_search($target,$nextSiblings);
-        if ($targetPosition !== false) {
-            if ($action == "after") {
-                $targetPosition++;
-            }
-            $repo->moveDown($source, $targetPosition);
-        } else {
-            $previousSiblings = $repo->getPrevSiblings($source);
-            $previousSiblings = array_reverse($previousSiblings);
-            $targetPosition = array_search($target,$previousSiblings);
-            if ($targetPosition !== false) {
-                if ($action == "before") {
-                    $targetPosition++;
-                }
-                $repo->moveUp($source,$targetPosition);
-            }
+        $children = $repo->getChildren($movee->getParent());
+        $position = array_search($movee, $children);
+
+        if ($newPosition < $position) {
+            $repo->moveUp($movee, $position - $newPosition);
+        } else if ($newPosition > $position) {
+            $repo->moveDown($movee, $newPosition - $position);
         }
+
 
         return new Response();
     }
