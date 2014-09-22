@@ -8,8 +8,12 @@
 
 namespace tsCMS\PageBundle\Controller;
 
+use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use tsCMS\PageBundle\Entity\Page;
 use tsCMS\SystemBundle\Services\RouteService;
 
@@ -34,5 +38,24 @@ class DefaultController extends Controller {
 
 
         return array("page" => $page);
+    }
+
+    public function childRenderAction(Page $page, Request $request)
+    {
+        /** @var NestedTreeRepository $repo */
+        $repo = $this->getDoctrine()->getManager()->getRepository('tsCMSPageBundle:Page');
+        /** @var Page[] $children */
+        $children = $repo->children($page, true);
+
+        $html = "";
+        foreach ($children as $child) {
+            $subRequest = $request->duplicate(array(), null, array("_controller" => "tsCMSPageBundle:Default:show", "page" => $child));
+            $subRequest->headers->set("X-Requested-With","XMLHttpRequest");
+            /** @var Response $response */
+            $response = $this->get('http_kernel')->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
+            $html .= $response->getContent();
+        }
+
+        return new Response($html);
     }
 } 
