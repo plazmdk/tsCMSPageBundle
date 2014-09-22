@@ -96,7 +96,7 @@ class PagesController extends Controller
         $newPosition = $request->request->get("position");
 
         /** @var NestedTreeRepository $repo */
-        $repo = $this->getDoctrine()->getManager()->getRepository('tsCMSMenuBundle:Page');
+        $repo = $this->getDoctrine()->getManager()->getRepository('tsCMSPageBundle:Page');
         /** @var Page $movee */
         $movee = $repo->find($id);
 
