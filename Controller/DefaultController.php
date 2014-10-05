@@ -40,22 +40,26 @@ class DefaultController extends Controller {
         return array("page" => $page);
     }
 
-    public function childRenderAction(Page $page, Request $request)
+    public function childRenderAction($pageTitle, Request $request)
     {
         /** @var NestedTreeRepository $repo */
         $repo = $this->getDoctrine()->getManager()->getRepository('tsCMSPageBundle:Page');
-        /** @var Page[] $children */
-        $children = $repo->children($page, true);
+
+        $page = $repo->findBy(array("title" => $pageTitle));
 
         $html = "";
-        foreach ($children as $child) {
-            $subRequest = $request->duplicate(array(), null, array("_controller" => "tsCMSPageBundle:Default:show", "page" => $child));
-            $subRequest->headers->set("X-Requested-With","XMLHttpRequest");
-            /** @var Response $response */
-            $response = $this->get('http_kernel')->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
-            $html .= $response->getContent();
-        }
+        if ($page) {
+            /** @var Page[] $children */
+            $children = $repo->children($page, true);
 
+            foreach ($children as $child) {
+                $subRequest = $request->duplicate(array(), null, array("_controller" => "tsCMSPageBundle:Default:show", "page" => $child));
+                $subRequest->headers->set("X-Requested-With","XMLHttpRequest");
+                /** @var Response $response */
+                $response = $this->get('http_kernel')->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
+                $html .= $response->getContent();
+            }
+        }
         return new Response($html);
     }
 } 
