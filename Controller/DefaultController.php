@@ -45,7 +45,7 @@ class DefaultController extends Controller {
         /** @var NestedTreeRepository $repo */
         $repo = $this->getDoctrine()->getManager()->getRepository('tsCMSPageBundle:Page');
 
-        $page = $repo->findBy(array("title" => $pageTitle));
+        $page = $repo->findOneBy(array("title" => $pageTitle));
 
         $html = "";
         if ($page) {
