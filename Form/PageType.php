@@ -58,7 +58,7 @@ class PageType extends AbstractType {
                     "class" => "pageTitle"
                 )
             ))
-            ->add("path", "route", array(
+            ->add("routeConfig", "route", array(
                 "required" => false, 
                 "label"  => 'page.path',
                 "attr" => array(
@@ -69,7 +69,7 @@ class PageType extends AbstractType {
                 "label"  => "page.parent",
                 "class"    => "tsCMS\PageBundle\Entity\Page",
                 "required" => false,
-                "option_attributes" => array("data-path" => "path"),
+                "option_attributes" => array("data-path" => "routeConfig.path"),
                 "attr" => array(
                     "class" => "pageParent"
                 ),

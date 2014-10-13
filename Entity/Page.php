@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use tsCMS\SystemBundle\Interfaces\PathInterface;
+use tsCMS\SystemBundle\Model\RouteConfig;
 use tsCMS\SystemBundle\Validator\Constraints as tsCMSConstraints;
 
 /**
@@ -35,10 +36,8 @@ class Page implements PathInterface {
      * @ORM\Column(type="text", nullable=true)
      */
     protected $content;
-    /**
-     * @Assert\NotBlank()
-     */
-    protected $path;
+
+    protected $routeConfig;
 
     /**
      * @Gedmo\TreeLeft
@@ -155,19 +154,19 @@ class Page implements PathInterface {
     }
 
     /**
-     * @param mixed $path
+     * @param RouteConfig $routeConfig
      */
-    public function setPath($path)
+    public function setRouteConfig($routeConfig)
     {
-        $this->path = $path;
+        $this->routeConfig = $routeConfig;
     }
 
     /**
-     * @return mixed
+     * @return RouteConfig
      */
-    public function getPath()
+    public function getRouteConfig()
     {
-        return $this->path;
+        return $this->routeConfig;
     }
 
 

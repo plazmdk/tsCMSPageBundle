@@ -37,7 +37,7 @@ class PagesController extends Controller
             $em->persist($page);
             $em->flush();
 
-            $this->savePagePath($page);
+            $this->savePageRouteConfig($page);
 
             return $this->redirect($this->generateUrl("tscms_page_pages_edit",array("id" => $page->getId())));
         }
@@ -61,7 +61,7 @@ class PagesController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
-            $this->savePagePath($page);
+            $this->savePageRouteConfig($page);
 
             return $this->redirect($this->generateUrl("tscms_page_pages_edit",array("id" => $page->getId())));
         }
@@ -122,12 +122,12 @@ class PagesController extends Controller
     }
 
 
-    private function savePagePath(Page $page) {
+    private function savePageRouteConfig(Page $page) {
         /** @var RouteService $routeService */
         $routeService = $this->get("tsCMS.routeService");
         $name = $routeService->generateNameFromEntity($page);
-        if ($page->getPath()) {
-            $routeService->addRoute($name, $page->getTitle(), $page->getPath(),"tsCMSPageBundle:Default:show","page",array("id" => $page->getId()),array(),false, true);
+        if ($page->getRouteConfig()) {
+            $routeService->addRoute($name, $page->getRouteConfig()->getTitle() ? $page->getRouteConfig()->getTitle() : $page->getTitle(), $page->getRouteConfig()->getPath(),"tsCMSPageBundle:Default:show","page",array("id" => $page->getId()),array(),false, true, $page->getRouteConfig()->getMetatags(), $page->getRouteConfig()->getMetadescription());
         } else {
             $routeService->removeRoute($name);
         }
