@@ -9,7 +9,7 @@
             pageParentPath = "";
         }
 
-        var pagePath = form.find(".pagePath");
+        var pagePath = form.find(".route");
         original = pagePath.val() == (pageParentPath+"/"+convertTitleToPath(pageTitle)).replace(/\/\//g,'/') || pagePath.val() == "";
     })
     .on("change",function() {
@@ -23,7 +23,7 @@
             pageParentPath = "";
         }
 
-        var pagePath = form.find(".pagePath");
+        var pagePath = form.find(".route");
         pagePath.val((pageParentPath+"/"+convertTitleToPath(pageTitle)).replace(/\/\//g,'/')).change();
     });
 
